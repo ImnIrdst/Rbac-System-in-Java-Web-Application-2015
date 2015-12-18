@@ -1,0 +1,9 @@
+﻿-- definition incomplete
+CREATE SEQUENCE id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 1000000
+  START 13
+  CACHE 1;
+ALTER TABLE id_seq
+  OWNER TO iman;
