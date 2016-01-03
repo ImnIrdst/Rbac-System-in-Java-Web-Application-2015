@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+<h:body>
+    <h:form id="insertForm">
+        <p:panel id="mainPanel">
+            <p:panelGrid id="gridMain" columns="2">
+                <p:outputLabel value="Role Name:" for="roleNameInput"/>
+                <p:inputText id="roleNameInput" value="#{rolesManagedBean.roleName}"/>
+
+                <p:outputLabel value="Role Descrition:" for="roleDescInput"/>
+                <p:inputText id="roleDescInput" value="#{rolesManagedBean.roleDescription}"/>
+
+                <p:commandButton value="insert" action="#{rolesManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+    <h:form id="dataGridForm">
+        <p:panel id="dataGridPanel">
+            <p:panelGrid id="dataGridPanelGrid">
+                <p:dataTable var="role" value="#{rolesManagedBean.rolesList}">
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{role.roleId}" />
+                    </p:column>
+
+                    <p:column headerText="Role Name">
+                        <p:outputLabel value="#{role.roleName}" />
+                    </p:column>
+
+                    <p:column headerText="Role Description">
+                        <p:outputLabel value="#{role.roleDescription}" />
+                    </p:column>
+
+                    <p:column headerText="">
+                        <p:commandButton value="delete" action="#{rolesManagedBean.deleteAction(role)}" update="@([id$=dataGridPanel])"/>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panelGrid>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

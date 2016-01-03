@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+
+<h:body>
+    <p:panel id="headerPanel" style="margin: 10px auto;">
+        <p:outputPanel >
+            <h1> adding and deleting goods! </h1>
+        </p:outputPanel>
+    </p:panel>
+    <h:panelGrid columns="2" style="width: 100%" cellpadding="10" >
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="menuForm" width="100%">
+                <p:menu style="height: 500px; width: 98%;">
+                    <p:submenu label="Navigation">
+                        <p:menuitem value="Desktop" action="/pages/managerPages/managerDesktop.xhtml"/>
+                        <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
+                        <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </h:panelGrid>
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="insertForm">
+                <p:panel id="mainPanel">
+                    <p:panelGrid id="gridMain" columns="2">
+                        <p:outputLabel value="Name:" for="nameInput"/>
+                        <p:inputText id="nameInput" value="#{goodsManagedBean.goodName}"/>
+
+                        <p:outputLabel value="Descrition:" for="descriptionInput"/>
+                        <p:inputText id="descriptionInput" value="#{goodsManagedBean.goodDescription}"/>
+
+                        <p:outputLabel value="Price:" for="priceInput"/>
+                        <p:inputText id="priceInput" value="#{goodsManagedBean.goodPrice}"/>
+
+                        <p:commandButton value="add" action="#{goodsManagedBean.addToPendingAction}" update="@([id$=dataGridPanel])"/>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+            <h:form id="dataGridForm">
+                <p:panel id="dataGridPanel" style="margin-top: 10px;" >
+                    <p:panelGrid id="dataGridPanelGrid">
+                        <p:dataTable var="good" value="#{goodsManagedBean.goodsList}" tableStyle="width: 100%; text-align: center;">
+                            <p:column headerText="ID" sortBy="#{good.goodId}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodId}" />
+                            </p:column>
+
+                            <p:column headerText="Name" sortBy="#{good.goodName}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodName}" />
+                            </p:column>
+
+                            <p:column headerText="Description" sortBy="#{good.goodDescription}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodDescription}"  />
+                            </p:column>
+
+                            <p:column headerText="Price" sortBy="#{good.goodPrice}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodPrice}"/>
+                            </p:column>
+
+                            <p:column headerText="Status" sortBy="#{good.goodStatus}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodFullStatus()}"/>
+                            </p:column>
+
+                            <p:column headerText="" style="width: 100px; padding: 10px;" >
+                                <p:commandButton value="delete" action="#{goodsManagedBean.deleteAction(good)}"
+                                                 update="@([id$=dataGridPanel])"  />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </h:panelGrid>
+    </h:panelGrid>
+</h:body>
+</html>
