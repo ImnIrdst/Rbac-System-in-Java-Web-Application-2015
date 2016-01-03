@@ -33,7 +33,14 @@
               </property>
               <property name="annotatedClasses">
                      <list>
+                            <value>imnprj2.dao.entity.GoodsEntity</value>
                             <value>imnprj2.dao.entity.UsersEntity</value>
+                            <value>imnprj2.dao.entity.RolesEntity</value>
+                            <value>imnprj2.dao.entity.PermissionsEntity</value>
+                            <value>imnprj2.dao.entity.UserRoleEntity</value>
+                            <value>imnprj2.dao.entity.UserRoleEntityPK</value>
+                            <value>imnprj2.dao.entity.RolePermissionEntity</value>
+                            <value>imnprj2.dao.entity.RolePermissionEntityPK</value>
                      </list>
               </property>
        </bean>

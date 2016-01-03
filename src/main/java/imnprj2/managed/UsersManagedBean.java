@@ -28,6 +28,7 @@ public class UsersManagedBean {
     private String email;
     private Timestamp creationDate;
     private List<UsersEntity> usersList;
+
     @ManagedProperty("#{usersService}")
     private UsersService usersService;
 
@@ -116,7 +117,7 @@ public class UsersManagedBean {
         UsersEntity usersEntity = new UsersEntity();
         usersEntity.setFullname(fullname);
         usersEntity.setUsername(username);
-        usersEntity.setPasswordHash(passwordHash);
+        usersEntity.setPasswordHash(passwordHash); // TODO: Use Password Hash
         usersEntity.setEmail(email);
         usersEntity.setSeenQty(0);
         usersEntity.setLastSeen(new Timestamp(0));

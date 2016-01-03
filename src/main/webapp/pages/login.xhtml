@@ -15,18 +15,18 @@
             <p:messages id="loginMessage" closable="true" autoUpdate="true"/>
             <p:panelGrid id="gridMain" columns="2">
                 <p:outputLabel value="Username:" for="usernameInput"/>
-                <p:inputText id="usernameInput" value="#{usersManagedBean.username}"/>
+                <p:inputText id="usernameInput" value="#{authenticatorManagedBean.email}"/>
 
                 <p:outputLabel value="Password:" for="passwordInput"/>
-                <p:inputText id="passwordInput" value="#{usersManagedBean.password}"/>
+                <p:inputText id="passwordInput" value="#{authenticatorManagedBean.password}"/>
 
                 <p:outputLabel value="Role:" for="roleInput"/>
-                <p:selectOneMenu id="roleInput" value="#{rolesManagedBean.selectedRole}">
+                <p:selectOneMenu id="roleInput" value="#{authenticatorManagedBean.selectedRole}">
                     <f:selectItem itemLabel="Select Role" itemValue=""/>
-                    <f:selectItems value="#{rolesManagedBean.selectRoles}"/>
+                    <f:selectItems value="#{authenticatorManagedBean.selectRoles}"/>
                 </p:selectOneMenu>
 
-                <p:commandButton value="login" actionListener="#{usersManagedBean.loginAction}"/>
+                <p:commandButton value="login" action="#{authenticatorManagedBean.loginAction}"/>
             </p:panelGrid>
         </p:panel>
     </h:form>

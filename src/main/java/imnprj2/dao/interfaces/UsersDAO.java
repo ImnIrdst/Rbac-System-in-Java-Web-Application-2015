@@ -13,4 +13,6 @@ public interface UsersDAO {
     UsersEntity getUserByUsername(String username);
     void insert(UsersEntity usersEntity);
     void delete(UsersEntity usersEntity);
+    void update(UsersEntity usersEntity);
+    UsersEntity getUserByEmail(String username);
 }

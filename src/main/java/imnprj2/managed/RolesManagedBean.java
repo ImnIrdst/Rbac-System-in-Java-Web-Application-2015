@@ -31,9 +31,8 @@ public class RolesManagedBean {
     private String selectedRole;
     private List<SelectItem> selectRoles;
 
-    @ManagedProperty("#{goodsService}")
+    @ManagedProperty("#{rolesService}")
     private RolesService rolesService;
-
 
     @PostConstruct
     public void init() {

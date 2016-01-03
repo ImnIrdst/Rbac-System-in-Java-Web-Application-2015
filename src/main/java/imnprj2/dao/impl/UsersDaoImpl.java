@@ -41,10 +41,20 @@ public class UsersDaoImpl implements UsersDAO {
     }
 
     @Override
+    public UsersEntity getUserByEmail(String email) {
+        String command = "from UsersEntity where email = '" + email +"'";
+        Query query = sessionFactory.getCurrentSession().createQuery(command);
+        return (query.list().size()==0 ? null : (UsersEntity) query.list().get(0));
+    }
+
+    @Override
     public void insert(UsersEntity usersEntity) {
         sessionFactory.getCurrentSession().saveOrUpdate(usersEntity);
     }
 
     @Override
     public void delete(UsersEntity usersEntity) { sessionFactory.getCurrentSession().delete(usersEntity); }
+
+    @Override
+    public void update(UsersEntity usersEntity) { sessionFactory.getCurrentSession().update(usersEntity); }
 }
