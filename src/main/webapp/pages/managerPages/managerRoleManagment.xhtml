@@ -10,42 +10,65 @@
     <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
 </h:head>
 <h:body>
-    <h:form id="insertForm">
-        <p:panel id="mainPanel">
-            <p:panelGrid id="gridMain" columns="2">
-                <p:outputLabel value="Role Name:" for="roleNameInput"/>
-                <p:inputText id="roleNameInput" value="#{rolesManagedBean.roleName}"/>
+    <p:panel id="headerPanel" style="margin: 10px auto;">
+        <p:outputPanel >
+            <h1> Manger Desktop </h1>
+        </p:outputPanel>
+    </p:panel>
+    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
+                 columnClasses="ui-grid-col-2, ui-grid-col-10">
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="menuForm">
+                <p:menu style="height: 500px; width: 98%;">
+                    <p:submenu label="Navigation">
+                        <p:menuitem value="Desktop"          action="/pages/sharedPages/sharedDesktop.xhtml"/>
+                        <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
+                        <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
+                        <p:menuitem value="Managing Roles"   action="/pages/managerPages/managerRoleManagment.xhtml"/>
+                        <p:menuitem value="Managing Users"   action="/pages/managerPages/managerUserManagment.xhtml"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </h:panelGrid>
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="insertForm">
+                <p:panel id="mainPanel">
+                    <p:panelGrid id="gridMain" columns="2">
+                        <p:outputLabel value="Role Name:" for="roleNameInput"/>
+                        <p:inputText id="roleNameInput" value="#{rolesManagedBean.roleName}"/>
 
-                <p:outputLabel value="Role Descrition:" for="roleDescInput"/>
-                <p:inputText id="roleDescInput" value="#{rolesManagedBean.roleDescription}"/>
+                        <p:outputLabel value="Role Descrition:" for="roleDescInput"/>
+                        <p:inputText id="roleDescInput" value="#{rolesManagedBean.roleDescription}"/>
 
-                <p:commandButton value="insert" action="#{rolesManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
-            </p:panelGrid>
-        </p:panel>
-    </h:form>
-    <h:form id="dataGridForm">
-        <p:panel id="dataGridPanel">
-            <p:panelGrid id="dataGridPanelGrid">
-                <p:dataTable var="role" value="#{rolesManagedBean.rolesList}">
-                    <p:column headerText="ID">
-                        <p:outputLabel value="#{role.roleId}" />
-                    </p:column>
+                        <p:commandButton value="insert" action="#{rolesManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+            <h:form id="dataGridForm">
+                <p:panel id="dataGridPanel">
+                    <p:panelGrid id="dataGridPanelGrid">
+                        <p:dataTable var="role" value="#{rolesManagedBean.rolesList}" tableStyle="width: 100%; text-align: center;">
+                            <p:column headerText="ID">
+                                <p:outputLabel value="#{role.roleId}" />
+                            </p:column>
 
-                    <p:column headerText="Role Name">
-                        <p:outputLabel value="#{role.roleName}" />
-                    </p:column>
+                            <p:column headerText="Role Name">
+                                <p:outputLabel value="#{role.roleName}" />
+                            </p:column>
 
-                    <p:column headerText="Role Description">
-                        <p:outputLabel value="#{role.roleDescription}" />
-                    </p:column>
+                            <p:column headerText="Role Description">
+                                <p:outputLabel value="#{role.roleDescription}" />
+                            </p:column>
 
-                    <p:column headerText="">
-                        <p:commandButton value="delete" action="#{rolesManagedBean.deleteAction(role)}" update="@([id$=dataGridPanel])"/>
-                    </p:column>
+                            <p:column headerText="">
+                                <p:commandButton value="delete" action="#{rolesManagedBean.deleteAction(role)}" update="@([id$=dataGridPanel])"/>
+                            </p:column>
 
-                </p:dataTable>
-            </p:panelGrid>
-        </p:panel>
-    </h:form>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </h:panelGrid>
+    </p:panelGrid>
 </h:body>
 </html>

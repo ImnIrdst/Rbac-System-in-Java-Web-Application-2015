@@ -22,21 +22,23 @@
             <h:form id="menuForm">
                 <p:menu style="height: 500px; width: 98%;">
                     <p:submenu label="Navigation">
-                        <p:menuitem value="Desktop"          action="/pages/managerPages/managerDesktop.xhtml"/>
+                        <p:menuitem value="Desktop"          action="/pages/sharedPages/sharedDesktop.xhtml"/>
                         <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
                         <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
-                        <p:menuitem value="Managing Roles"   action="/pagses/managerPages/managerRoleManagment.xhtml"/>
                         <p:menuitem value="Managing Users"   action="/pages/managerPages/managerUserManagment.xhtml"/>
+                        <p:menuitem value="Managing Roles"   action="/pages/managerPages/managerRoleManagment.xhtml"/>
+                        <p:menuitem value="Permission Users"   action="/pages/permissionsManagment.xhtml"/>
+                        <p:menuitem value="Add Roles Wizard"   action="/pages/rolePermissionWizard.xhtml"/>
                     </p:submenu>
                 </p:menu>
             </h:form>
         </h:panelGrid>
         <h:panelGrid columns="1" width="100%">
             <h:panelGrid columns="1" style="margin: 20px">
-                <p:outputLabel value="Hello, Iman "/></h:panelGrid>
+                <p:outputLabel value="Hello, #{authenticatorManagedBean.curUser.fullname} "/></h:panelGrid>
             <p:panel style="margin: 20px"><p:outputLabel value="Role: #{authenticatorManagedBean.selectedRole}"/></p:panel>
             <p:panel style="margin: 20px"><p:outputLabel value="Visit Qty: #{authenticatorManagedBean.curUser.seenQty}"/></p:panel>
-            <p:panel style="margin: 20px"><p:outputLabel value="Last Seen: #{authenticatorManagedBean.curUser.lastSeen}"/></p:panel>
+            <p:panel style="margin: 20px"><p:outputLabel value="Last Seen: #{authenticatorManagedBean.lastSeen}"/></p:panel>
         </h:panelGrid>
     </p:panelGrid>
 </h:body>

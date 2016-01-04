@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import org.hibernate.Query;
 import java.util.List;
 
 /**
@@ -36,6 +37,14 @@ public class RolesDaoImpl implements RolesDAO {
     @Override
     public RolesEntity getRolesById(int roleId) {
         return null;
+    }
+
+    @Override
+    public RolesEntity getRoleByName(String name) {
+        String statement = "from RolesEntity where roleName = '" + name + "'";
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        if (query.list().size() == 0) return null;
+        return (RolesEntity) query.list().get(0);
     }
 
     @Override

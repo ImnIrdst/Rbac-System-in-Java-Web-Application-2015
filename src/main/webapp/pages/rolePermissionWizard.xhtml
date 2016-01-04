@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+<h:body>
+    <p:panel id="headerPanel" style="margin: 10px auto;">
+        <p:outputPanel >
+            <h1> Manger Desktop </h1>
+        </p:outputPanel>
+    </p:panel>
+    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
+                 columnClasses="ui-grid-col-2, ui-grid-col-10">
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="menuForm">
+                <p:menu style="height: 500px; width: 98%;">
+                    <p:submenu label="Navigation">
+                        <p:menuitem value="Desktop"          action="/pages/sharedPages/sharedDesktop.xhtml"/>
+                        <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
+                        <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
+                        <p:menuitem value="Managing Roles"   action="/pages/managerPages/managerRoleManagment.xhtml"/>
+                        <p:menuitem value="Managing Users"   action="/pages/managerPages/managerUserManagment.xhtml"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </h:panelGrid>
+        <h:panelGrid columns="1" width="100%">
+            <p:messages id="message" showDetail="true" autoUpdate="true" closable="true"/>
+            <h:form id="wizardForm">
+                <p:wizard flowListener="#{rolePermissionWizardManagedBean.onFlowProcess}" >
+                    <p:tab id="rolesTab" title="Insert Role Infos">
+                        <p:panelGrid columns="2" columnClasses="label, value" style="height:150px;">
+                            <p:outputLabel value="Role Name:" for="roleNameInput"/>
+                            <p:inputText id="roleNameInput" value="#{rolePermissionWizardManagedBean.roleName}"/>
+
+                            <p:outputLabel value="Role Descrition:" for="roleDescInput"/>
+                            <p:inputText id="roleDescInput" value="#{rolePermissionWizardManagedBean.roleDescription}"/>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab id="confirm" title="Select Permissions">
+                        <p:panelGrid columns="1" style="width:100%;">
+                            <p:selectManyCheckbox id="permissionCheckBoxes" value="#{rolePermissionWizardManagedBean.selectedPermissions}" layout="grid" columns="2" style="padding: 20px; width: 100%;">
+                                <f:selectItems value="#{rolePermissionWizardManagedBean.permissionsList}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+                            </p:selectManyCheckbox>
+                            <p:commandButton value="Finish" actionListener="#{rolePermissionWizardManagedBean.saveAction}" style="float: right;" update="@([id$=dataGridPanel])"/>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+            <h:form id="dataGridForm">
+                <p:panel id="dataGridPanel">
+                    <p:panelGrid id="dataGridPanelGrid">
+                        <p:dataTable var="permissionRole" value="#{rolePermissionWizardManagedBean.rolePermissionEntityList}"
+                                     tableStyle="width: 100%; text-align: center;">
+
+                            <p:column headerText="Role Name">
+                                <p:outputLabel value="#{permissionRole.rolesByRoleId.roleName}" />
+                            </p:column>
+
+                            <p:column headerText="Permission Name">
+                                <p:outputLabel value="#{permissionRole.permissionsByPermissionId.permissionName}" />
+                            </p:column>
+
+                            <p:column headerText="">
+                                <p:commandButton value="revoke" action="#{rolePermissionWizardManagedBean.deleteAction(permissionRole)}" update="@([id$=dataGridPanel])"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </h:panelGrid>
+    </p:panelGrid>
+</h:body>
+</html>

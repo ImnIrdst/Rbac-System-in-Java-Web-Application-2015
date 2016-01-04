@@ -13,4 +13,6 @@ public interface RolesDAO {
     RolesEntity getRolesById(int roleId);
     void insert(RolesEntity rolesEntity);
     void delete(RolesEntity rolesEntity);
+
+    RolesEntity getRoleByName(String name);
 }

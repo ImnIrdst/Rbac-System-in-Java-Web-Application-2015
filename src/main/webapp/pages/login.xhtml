@@ -15,7 +15,9 @@
             <p:messages id="loginMessage" closable="true" autoUpdate="true"/>
             <p:panelGrid id="gridMain" columns="2">
                 <p:outputLabel value="Username:" for="usernameInput"/>
-                <p:inputText id="usernameInput" value="#{authenticatorManagedBean.email}"/>
+                <p:inputText id="usernameInput" value="#{authenticatorManagedBean.email}">
+                    <p:ajax event="blur" listener="#{authenticatorManagedBean.updateSelectRoles}" update="roleInput" />
+                </p:inputText>
 
                 <p:outputLabel value="Password:" for="passwordInput"/>
                 <p:inputText id="passwordInput" value="#{authenticatorManagedBean.password}"/>

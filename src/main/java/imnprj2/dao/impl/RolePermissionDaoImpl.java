@@ -28,8 +28,14 @@ public class RolePermissionDaoImpl implements RolePermissionDAO {
     }
 
     @Override
+    public void insert(RolePermissionEntity rolePermissionEntity) { sessionFactory.getCurrentSession().saveOrUpdate(rolePermissionEntity); }
+
+    @Override
+    public void delete(RolePermissionEntity rolePermissionEntity) { sessionFactory.getCurrentSession().delete(rolePermissionEntity); }
+
+    @Override
     public List<RolePermissionEntity> getRolePermissions() {
-        return null;
+        return sessionFactory.getCurrentSession().createQuery("from RolePermissionEntity order by roleId").list();
     }
 
     @Override
@@ -37,13 +43,5 @@ public class RolePermissionDaoImpl implements RolePermissionDAO {
         return null;
     }
 
-    @Override
-    public void insert(RolePermissionEntity rolePermissionEntity) {
 
-    }
-
-    @Override
-    public void delete(RolePermissionEntity rolePermissionEntity) {
-
-    }
 }

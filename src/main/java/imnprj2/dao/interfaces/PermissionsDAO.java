@@ -10,8 +10,10 @@ import java.util.List;
  *
  */
 public interface PermissionsDAO {
-    List<PermissionsEntity> getPermissions();
-    PermissionsEntity getPermissionsById(int permissionId);
     void insert(PermissionsEntity permissionsEntity);
     void delete(PermissionsEntity permissionsEntity);
+
+    List<PermissionsEntity> getPermissions();
+    PermissionsEntity getPermissionsByName(String name);
+    PermissionsEntity getPermissionsById(int permissionId);
 }

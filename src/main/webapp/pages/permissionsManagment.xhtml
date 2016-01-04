@@ -12,7 +12,7 @@
 <h:body>
     <p:panel id="headerPanel" style="margin: 10px auto;">
         <p:outputPanel >
-            <h1> Manging Pending Requests! </h1>
+            <h1> Manger Desktop </h1>
         </p:outputPanel>
     </p:panel>
     <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
@@ -24,44 +24,44 @@
                         <p:menuitem value="Desktop"          action="/pages/sharedPages/sharedDesktop.xhtml"/>
                         <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
                         <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
-                        <p:menuitem value="Managing Users" action="/pages/managerPages/managerUserManagment.xhtml"/>
+                        <p:menuitem value="Managing Roles"   action="/pages/managerPages/managerRoleManagment.xhtml"/>
+                        <p:menuitem value="Managing Users"   action="/pages/managerPages/managerUserManagment.xhtml"/>
                     </p:submenu>
                 </p:menu>
             </h:form>
         </h:panelGrid>
         <h:panelGrid columns="1" width="100%">
+            <h:form id="insertForm">
+                <p:panel id="mainPanel">
+                    <p:panelGrid id="gridMain" columns="2">
+                        <p:outputLabel value="Permission Name:" for="permissionNameInput"/>
+                        <p:inputText id="permissionNameInput" value="#{permissionsManagedBean.permissionName}"/>
+
+                        <p:outputLabel value="Permission Descrition:" for="permissionDescInput"/>
+                        <p:inputText id="permissionDescInput" value="#{permissionsManagedBean.permissionDescription}"/>
+
+                        <p:commandButton value="insert" action="#{permissionsManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
             <h:form id="dataGridForm">
                 <p:panel id="dataGridPanel">
                     <p:panelGrid id="dataGridPanelGrid">
-                        <p:dataTable var="good" value="#{goodsManagedBean.pendingGoods}" tableStyle="width: 100%; text-align: center;">
-                            <p:column headerText="ID" sortBy="#{good.goodId}" style="padding: 10px">
-                                <p:outputLabel value="#{good.goodId}" />
+                        <p:dataTable var="permission" value="#{permissionsManagedBean.permissionsList}" tableStyle="width: 100%; text-align: center;">
+                            <p:column headerText="ID">
+                                <p:outputLabel value="#{permission.permissionId}" />
                             </p:column>
 
-                            <p:column headerText="Name" sortBy="#{good.goodName}" style="padding: 10px">
-                                <p:outputLabel value="#{good.goodName}" />
+                            <p:column headerText="Permission Name">
+                                <p:outputLabel value="#{permission.permissionName}" />
                             </p:column>
 
-                            <p:column headerText="Description" sortBy="#{good.goodDescription}" style="padding: 10px">
-                                <p:outputLabel value="#{good.goodDescription}"  />
+                            <p:column headerText="Permission Description">
+                                <p:outputLabel value="#{permission.permissionDescription}" />
                             </p:column>
 
-                            <p:column headerText="Price" sortBy="#{good.goodPrice}" style="padding: 10px">
-                                <p:outputLabel value="#{good.goodPrice}"  />
-                            </p:column>
-
-                            <p:column headerText="Status" sortBy="#{good.goodStatus}" style="padding: 10px">
-                                <p:outputLabel value="#{good.goodFullStatus()}"  />
-                            </p:column>
-
-                            <p:column headerText="" style="width: 200px; padding: 10px;" >
-
-                                <p:commandButton value="accept" action="#{goodsManagedBean.acceptAction(good)}"
-                                                 update="@([id$=dataGridPanel])" />
-
-                                <p:commandButton value="reject" action="#{goodsManagedBean.rejectAction(good)}"
-                                                 update="@([id$=dataGridPanel])" />
-
+                            <p:column headerText="">
+                                <p:commandButton value="delete" action="#{rolesManagedBean.deleteAction(permission)}" update="@([id$=dataGridPanel])"/>
                             </p:column>
 
                         </p:dataTable>
@@ -70,6 +70,5 @@
             </h:form>
         </h:panelGrid>
     </p:panelGrid>
-
 </h:body>
 </html>

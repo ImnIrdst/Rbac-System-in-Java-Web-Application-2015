@@ -24,6 +24,7 @@ public class AuthenticatorManagedBean {
     private int userId;
     private String email;
     private String password;
+    private String lastSeen;
     private UsersEntity curUser;
 
     private List<UsersEntity> usersList;
@@ -93,6 +94,14 @@ public class AuthenticatorManagedBean {
         this.curUser = curUser;
     }
 
+    public String getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(String lastSeen) {
+        this.lastSeen = lastSeen;
+    }
+
     public String getSelectedRole() {
         return selectedRole;
     }
@@ -109,17 +118,22 @@ public class AuthenticatorManagedBean {
         this.selectRoles = selectRoles;
     }
 
-    @PostConstruct
-    public void init() {
-        setMessage("Enter Username and password.");
-        usersList = usersService.usersList();
-
+    public void updateSelectRoles(){
         List<RolesEntity> rolesList = usersService.getUserRoles();
 
         selectRoles = new ArrayList<SelectItem>();
         for (RolesEntity role: rolesList){
             selectRoles.add(new SelectItem(role.getRoleName(), role.getRoleName()));
         }
+        if (email != null && email.length() > 0 ) selectRoles.add(new SelectItem("hello", "iman"));
+    }
+
+    @PostConstruct
+    public void init() {
+        setMessage("Enter Username and password.");
+        usersList = usersService.usersList();
+
+        updateSelectRoles();
     }
 
     @PreDestroy
@@ -128,15 +142,19 @@ public class AuthenticatorManagedBean {
     }
 
     public String loginAction(){
-        if (curUser != null) tearDown();
+        if (curUser != null && usersService.getUserByEmail(curUser.getEmail()) != null)
+            tearDown();
 
         curUser = usersService.getUserByEmail(email);
-        if (curUser != null && password.equals(curUser.getPasswordHash())) { // TODO: Use Password Hash
+        if (curUser != null && password.equals(curUser.getPasswordHash())){
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Successful!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 
-            if (selectedRole.equals("Manager")) return "/pages/sharedPages/sharedDesktop.xhtml";
-            if (selectedRole.equals("Employee")) return "/pages/employeePages/employeeGoodsManagement.xhtml";
+            lastSeen = curUser.getLastSeen().toString();
+            if (curUser.getLastSeen().equals(new Timestamp(0))) lastSeen = "N/A";
+
+            return "/pages/sharedPages/sharedDesktop.xhtml";
+
         } else {
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username or Password are Incorrect!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);

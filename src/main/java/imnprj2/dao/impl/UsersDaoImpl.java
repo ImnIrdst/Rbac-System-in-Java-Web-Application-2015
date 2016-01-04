@@ -56,5 +56,7 @@ public class UsersDaoImpl implements UsersDAO {
     public void delete(UsersEntity usersEntity) { sessionFactory.getCurrentSession().delete(usersEntity); }
 
     @Override
-    public void update(UsersEntity usersEntity) { sessionFactory.getCurrentSession().update(usersEntity); }
+    public void update(UsersEntity usersEntity) {
+        sessionFactory.getCurrentSession().update(usersEntity);
+    }
 }

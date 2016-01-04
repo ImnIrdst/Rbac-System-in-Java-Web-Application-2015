@@ -1,7 +1,10 @@
 package imnprj2.dao.impl;
 
+import imnprj2.dao.entity.RolesEntity;
 import imnprj2.dao.interfaces.PermissionsDAO;
 import imnprj2.dao.entity.PermissionsEntity;
+import imnprj2.dao.interfaces.RolesDAO;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,23 +30,28 @@ public class PermissionDaoImpl implements PermissionsDAO {
         this.sessionFactory = sessionFactory;
     }
 
+
+
+    @Override
+    public void insert(PermissionsEntity permissionsEntity) { sessionFactory.getCurrentSession().saveOrUpdate(permissionsEntity); }
+
+    @Override
+    public void delete(PermissionsEntity permissionsEntity) { sessionFactory.getCurrentSession().delete(permissionsEntity); }
+
     @Override
     public List<PermissionsEntity> getPermissions() {
-        return null;
+        return sessionFactory.getCurrentSession().createQuery("from PermissionsEntity ").list();
     }
 
     @Override
-    public PermissionsEntity getPermissionsById(int permissionId) {
-        return null;
-    }
+    public PermissionsEntity getPermissionsById(int permissionId) { return null; }
 
     @Override
-    public void insert(PermissionsEntity permissionsEntity) {
+    public PermissionsEntity getPermissionsByName(String name) {
+        Query query = sessionFactory.getCurrentSession()
+                .createQuery("from PermissionsEntity where permissionName = '" + name + "'");
 
-    }
-
-    @Override
-    public void delete(PermissionsEntity permissionsEntity) {
-
+        if (query.list().size() == 0) return null;
+        return (PermissionsEntity) query.list().get(0);
     }
 }
