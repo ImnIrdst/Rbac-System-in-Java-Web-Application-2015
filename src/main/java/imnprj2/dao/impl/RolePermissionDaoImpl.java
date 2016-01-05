@@ -2,6 +2,7 @@ package imnprj2.dao.impl;
 
 import imnprj2.dao.interfaces.RolePermissionDAO;
 import imnprj2.dao.entity.RolePermissionEntity;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,7 +36,16 @@ public class RolePermissionDaoImpl implements RolePermissionDAO {
 
     @Override
     public List<RolePermissionEntity> getRolePermissions() {
-        return sessionFactory.getCurrentSession().createQuery("from RolePermissionEntity order by roleId").list();
+        String statement = "from RolePermissionEntity order by roleId";
+        Query query =sessionFactory.getCurrentSession().createQuery(statement);
+        return query.list();
+    }
+
+    @Override
+    public List<RolePermissionEntity> getPermissionsForRole(int roleId) {
+        String statement = "from RolePermissionEntity where roleId = " + roleId;
+        Query query =sessionFactory.getCurrentSession().createQuery(statement);
+        return query.list();
     }
 
     @Override

@@ -2,6 +2,7 @@ package imnprj2.dao.impl;
 
 import imnprj2.dao.entity.UserRoleEntity;
 import imnprj2.dao.interfaces.UserRoleDAO;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,8 +29,16 @@ public class UserRoleDaoImpl implements UserRoleDAO {
     }
 
     @Override
+    public void insert(UserRoleEntity userRoleEntity) { sessionFactory.getCurrentSession().saveOrUpdate(userRoleEntity); }
+
+    @Override
+    public void delete(UserRoleEntity userRoleEntity) { sessionFactory.getCurrentSession().delete(userRoleEntity); }
+
+    @Override
     public List<UserRoleEntity> getUserRoles() {
-        return null;
+        String statement = "from UserRoleEntity order by userId";
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        return query.list();
     }
 
     @Override
@@ -38,12 +47,9 @@ public class UserRoleDaoImpl implements UserRoleDAO {
     }
 
     @Override
-    public void insert(UserRoleEntity userRoleEntity) {
-
-    }
-
-    @Override
-    public void delete(UserRoleEntity userRoleEntity) {
-
+    public List<UserRoleEntity> getRolesForUser(int userId) {
+        String statement = "from UserRoleEntity where userId = " + userId;
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        return query.list();
     }
 }

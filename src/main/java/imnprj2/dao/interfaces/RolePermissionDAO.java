@@ -11,7 +11,9 @@ package imnprj2.dao.interfaces;
  */
 public interface RolePermissionDAO {
     List<RolePermissionEntity> getRolePermissions();
+    List<RolePermissionEntity> getPermissionsForRole(int roleId);
     RolePermissionEntity getRolePermissionsByIds(int roleId, int permissionId);
     void insert(RolePermissionEntity rolePermissionEntity);
     void delete(RolePermissionEntity rolePermissionEntity);
+
 }

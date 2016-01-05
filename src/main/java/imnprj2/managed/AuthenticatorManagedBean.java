@@ -1,8 +1,8 @@
 package imnprj2.managed;
 
-import imnprj2.dao.entity.RolesEntity;
+import imnprj2.dao.entity.UserRoleEntity;
 import imnprj2.dao.entity.UsersEntity;
-import imnprj2.service.UsersService;
+import imnprj2.service.AuthenticatorService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -32,8 +32,8 @@ public class AuthenticatorManagedBean {
     private String selectedRole;
     private List<SelectItem> selectRoles;
 
-    @ManagedProperty("#{usersService}")
-    private UsersService usersService;
+    @ManagedProperty("#{authenticatorService}")
+    private AuthenticatorService authenticatorService;
 
     private String message;
 
@@ -61,13 +61,12 @@ public class AuthenticatorManagedBean {
         this.email = email;
     }
 
-    public UsersService getUsersService() {
-        return usersService;
+    public AuthenticatorService getAuthenticatorService() {
+        return authenticatorService;
     }
 
-
-    public void setUsersService(UsersService usersService) {
-        this.usersService = usersService;
+    public void setAuthenticatorService(AuthenticatorService authenticatorService) {
+        this.authenticatorService = authenticatorService;
     }
 
     public List<UsersEntity> getUsersList() {
@@ -119,33 +118,39 @@ public class AuthenticatorManagedBean {
     }
 
     public void updateSelectRoles(){
-        List<RolesEntity> rolesList = usersService.getUserRoles();
+        if (email == null) {
+            selectRoles = new ArrayList<SelectItem>();
+            return;
+        }
+        List<UserRoleEntity> userRoleEntities = authenticatorService.getRolesForUser(email);
 
         selectRoles = new ArrayList<SelectItem>();
-        for (RolesEntity role: rolesList){
-            selectRoles.add(new SelectItem(role.getRoleName(), role.getRoleName()));
+        for (UserRoleEntity userRoleEntity : userRoleEntities){
+            String roleName = userRoleEntity.getRolesByRoleId().getRoleName();
+            selectRoles.add(new SelectItem(roleName, roleName));
         }
-        if (email != null && email.length() > 0 ) selectRoles.add(new SelectItem("hello", "iman"));
     }
 
     @PostConstruct
     public void init() {
         setMessage("Enter Username and password.");
-        usersList = usersService.usersList();
+        usersList = authenticatorService.usersList();
 
         updateSelectRoles();
     }
 
     @PreDestroy
     public void tearDown(){
-        usersService.updateLastSeen(curUser);
+        authenticatorService.updateLastSeen(curUser);
     }
 
     public String loginAction(){
-        if (curUser != null && usersService.getUserByEmail(curUser.getEmail()) != null)
+        if (curUser != null && authenticatorService.getUserByEmail(curUser.getEmail()) != null) {
+            curUser = authenticatorService.getUserByEmail(curUser.getEmail());
             tearDown();
+        }
 
-        curUser = usersService.getUserByEmail(email);
+        curUser = authenticatorService.getUserByEmail(email);
         if (curUser != null && password.equals(curUser.getPasswordHash())){
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Successful!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);

@@ -47,7 +47,14 @@ public class RolePermissionWizardManagedBean {
             permissionsList.add(permission.getPermissionName());
         }
 
+        clearFields();
         fillTheRolePermissionEntityList();
+    }
+
+    private void clearFields() {
+        roleName = "";
+        roleDescription = "";
+        selectedPermissions = new String[0];
     }
 
     public String onFlowProcess(FlowEvent event){

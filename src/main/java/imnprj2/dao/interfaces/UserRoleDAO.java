@@ -14,4 +14,5 @@ public interface UserRoleDAO {
     UserRoleEntity getUserRolesByIds(int userId, int roleId);
     void insert(UserRoleEntity userRoleEntity);
     void delete(UserRoleEntity userRoleEntity);
+    List<UserRoleEntity> getRolesForUser(int userId);
 }
