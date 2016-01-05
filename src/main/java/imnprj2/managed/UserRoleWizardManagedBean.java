@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @ViewScoped
 @ManagedBean(name = "userRoleWizardManagedBean")
-public class UserRoleWizardManagedBean {
+public class UserRoleWizardManagedBean implements Serializable {
     String fullname;
     String username;
     String password;

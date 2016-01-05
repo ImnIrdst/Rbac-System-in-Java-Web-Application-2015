@@ -11,12 +11,12 @@
 </h:head>
 <h:body>
     <h:form id="insertForm">
-        <p:panel id="mainPanel">
+        <p:panel id="mainPanel" style="margin: auto; width: 30%; " >
             <p:messages id="loginMessage" closable="true" autoUpdate="true"/>
-            <p:panelGrid id="gridMain" columns="2">
+            <p:panelGrid id="gridMain" columns="2" style="border: none;" styleClass="ui-noborder">
                 <p:outputLabel value="Username:" for="usernameInput"/>
                 <p:inputText id="usernameInput" value="#{authenticatorManagedBean.email}">
-                    <p:ajax event="blur" listener="#{authenticatorManagedBean.updateSelectRoles}" update="roleInput" />
+                    <p:ajax event="blur" listener="#{authenticatorManagedBean.updateSelectRoles}" update="roleInput"  />
                 </p:inputText>
 
                 <p:outputLabel value="Password:" for="passwordInput"/>
@@ -27,7 +27,7 @@
                     <f:selectItem itemLabel="Select Role" itemValue=""/>
                     <f:selectItems value="#{authenticatorManagedBean.selectRoles}"/>
                 </p:selectOneMenu>
-
+                <p:panel style="border: none;"/>
                 <p:commandButton value="login" action="#{authenticatorManagedBean.loginAction}"/>
             </p:panelGrid>
         </p:panel>

@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @RequestScoped
 @ManagedBean(name = "goodsManagedBean")
-public class GoodsManagedBean {
+public class GoodsManagedBean implements Serializable {
     private int goodId;
     private String goodName;
     private int goodPrice;

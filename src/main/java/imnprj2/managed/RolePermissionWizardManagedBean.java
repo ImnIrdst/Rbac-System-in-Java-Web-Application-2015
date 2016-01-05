@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @ViewScoped
 @ManagedBean(name = "rolePermissionWizardManagedBean")
-public class RolePermissionWizardManagedBean {
+public class RolePermissionWizardManagedBean implements Serializable {
     String roleName;
     String roleDescription;
 

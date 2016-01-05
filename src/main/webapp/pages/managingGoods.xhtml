@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
     <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkAuthentication()}" />
-    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkPermission('USER_MANAGMENT')}" />
+    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkPermission('ACCEPTING_PENDING_REQUESTS')}" />
     <p:panel id="headerPanel" style="margin: 10px auto;">
         <p:outputPanel >
             <h:form><p:commandButton value="logout" style="float: right;" action="#{authenticatorManagedBean.logoutAction()}" /></h:form>
@@ -51,53 +51,51 @@
             </h:form>
         </h:panelGrid>
         <h:panelGrid columns="1" width="100%">
-            <p:messages id="message" showDetail="true" autoUpdate="true" closable="true"/>
-            <h:form id="wizardForm">
-                <p:wizard flowListener="#{userRoleWizardManagedBean.onFlowProcess}" >
-                    <p:tab id="usersTab" title="Insert User Infos">
-                        <p:panelGrid columns="2" columnClasses="label, value" style="height:200px;">
-                            <p:outputLabel value="Full Name:" for="fullnameInput"/>
-                            <p:inputText id="fullnameInput" value="#{userRoleWizardManagedBean.fullname}"/>
+            <h:form id="insertForm">
+                <p:panel id="mainPanel">
+                    <p:panelGrid id="gridMain" columns="2">
+                        <p:outputLabel value="Name:" for="nameInput"/>
+                        <p:inputText id="nameInput" value="#{goodsManagedBean.goodName}"/>
 
-                            <p:outputLabel value="Username:" for="usernameInput"/>
-                            <p:inputText id="usernameInput" value="#{userRoleWizardManagedBean.username}"/>
+                        <p:outputLabel value="Descrition:" for="descriptionInput"/>
+                        <p:inputText id="descriptionInput" value="#{goodsManagedBean.goodDescription}"/>
 
-                            <p:outputLabel value="Password:" for="passwordInput"/>
-                            <p:inputText id="passwordInput" value="#{userRoleWizardManagedBean.password}"/>
+                        <p:outputLabel value="Price:" for="priceInput"/>
+                        <p:inputText id="priceInput" value="#{goodsManagedBean.goodPrice}"/>
 
-                            <p:outputLabel value="Email:" for="emailInput"/>
-                            <p:inputText id="emailInput" value="#{userRoleWizardManagedBean.email}"/>
-                        </p:panelGrid>
-                    </p:tab>
-                    <p:tab id="confirm" title="Select Roles">
-                        <p:panelGrid columns="1" style="width:100%;">
-                            <p:selectManyCheckbox id="permissionCheckBoxes" value="#{userRoleWizardManagedBean.selectedRoles}" layout="grid" columns="2" style="padding: 20px; width: 100%;">
-                                <f:selectItems value="#{userRoleWizardManagedBean.rolesList}" var="role" itemLabel="#{role}" itemValue="#{role}"/>
-                            </p:selectManyCheckbox>
-                            <p:commandButton value="Finish" actionListener="#{userRoleWizardManagedBean.saveAction}" style="float: right;" update="@([id$=dataGridPanel])"/>
-                        </p:panelGrid>
-                    </p:tab>
-                </p:wizard>
+                        <p:outputLabel value="Status:" for="statusInput"/>
+                        <p:inputText id="statusInput" value="#{goodsManagedBean.goodStatus}"/>
+
+                        <p:commandButton value="insert" action="#{goodsManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
+                    </p:panelGrid>
+                </p:panel>
             </h:form>
             <h:form id="dataGridForm">
                 <p:panel id="dataGridPanel">
                     <p:panelGrid id="dataGridPanelGrid">
-                        <p:dataTable var="userRole" value="#{userRoleWizardManagedBean.userRoleEntityList}"
-                                     tableStyle="width: 100%; text-align: center;">
-                            <p:column headerText="Full Name">
-                                <p:outputLabel value="#{userRole.usersByUserId.fullname}" />
+                        <p:dataTable var="good" value="#{goodsManagedBean.goodsList}">
+                            <p:column headerText="ID">
+                                <p:outputLabel value="#{good.goodId}" />
                             </p:column>
 
-                            <p:column headerText="Email">
-                                <p:outputLabel value="#{userRole.usersByUserId.email}" />
+                            <p:column headerText="Name">
+                                <p:outputLabel value="#{good.goodName}" />
                             </p:column>
 
-                            <p:column headerText="Role Name">
-                                <p:outputLabel value="#{userRole.rolesByRoleId.roleName}" />
+                            <p:column headerText="Description">
+                                <p:outputLabel value="#{good.goodDescription}" />
+                            </p:column>
+
+                            <p:column headerText="Price">
+                                <p:outputLabel value="#{good.goodPrice}" />
+                            </p:column>
+
+                            <p:column headerText="Status">
+                                <p:outputLabel value="#{good.goodStatus}" />
                             </p:column>
 
                             <p:column headerText="">
-                                <p:commandButton value="revoke" action="#{userRoleWizardManagedBean.deleteAction(userRole)}" update="@([id$=dataGridPanel])"/>
+                                <p:commandButton value="delete" action="#{goodsManagedBean.deleteAction(good)}" update="@([id$=dataGridPanel])"/>
                             </p:column>
 
                         </p:dataTable>

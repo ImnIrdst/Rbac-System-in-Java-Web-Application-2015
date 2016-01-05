@@ -10,22 +10,42 @@
     <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
 </h:head>
 <h:body>
+    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkAuthentication()}" />
+    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkPermission('ROLE_MANAGMENT')}" />
     <p:panel id="headerPanel" style="margin: 10px auto;">
         <p:outputPanel >
+            <h:form><p:commandButton value="logout" style="float: right;" action="#{authenticatorManagedBean.logoutAction()}" /></h:form>
             <h1> Manger Desktop </h1>
         </p:outputPanel>
     </p:panel>
     <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
-                 columnClasses="ui-grid-col-2, ui-grid-col-10">
+                 columnClasses="ui-grid-col-3, ui-grid-col-12">
         <h:panelGrid columns="1" width="100%">
             <h:form id="menuForm">
                 <p:menu style="height: 500px; width: 98%;">
                     <p:submenu label="Navigation">
-                        <p:menuitem value="Desktop"          action="/pages/sharedPages/sharedDesktop.xhtml"/>
-                        <p:menuitem value="Requesting Goods" action="/pages/employeePages/employeeGoodsManagment.xhtml"/>
-                        <p:menuitem value="Pending Requests" action="/pages/managerPages/managerGoodsManagment.xhtml"/>
-                        <p:menuitem value="Managing Roles"   action="/pages/managerPages/managerRoleManagment.xhtml"/>
-                        <p:menuitem value="Managing Users"   action="/pages/managerPages/managerUserManagment.xhtml"/>
+                        <p:menuitem value="Desktop"          action="/pages/desktop.xhtml"/>
+
+                        <p:menuitem value="Requesting Goods" action="/pages/requestingGoods.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Managing Pending Requests" action="/pages/managingGoodRequests.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePendingRequests()}"/>
+
+                        <p:menuitem value="Managing Users"   action="/pages/managingUsers.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Managing Roles"   action="/pages/managingRoles.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+
+                        <p:menuitem value="Managing Permissions"   action="/pages/managingPermissions.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePermission()}"/>
+
+                        <p:menuitem value="Add Users Wizard"   action="/pages/userRoleWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Add Roles Wizard"   action="/pages/rolePermissionWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
                     </p:submenu>
                 </p:menu>
             </h:form>

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.tree.Tree;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -56,6 +57,7 @@ public class AuthenticatorService {
 
     public List<UserRoleEntity> getRolesForUser(String email){
         UsersEntity usersEntity = usersDAO.getUserByEmail(email);
+        if (usersEntity == null) return new ArrayList<UserRoleEntity>();
         return userRoleDAO.getRolesForUser(usersEntity.getUserId());
     }
 

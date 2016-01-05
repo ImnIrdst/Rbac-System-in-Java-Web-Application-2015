@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+
+<h:body>
+    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkAuthentication()}" />
+    <p:panel id="headerPanel" style="margin: 10px auto;">
+        <p:outputPanel >
+            <h:form><p:commandButton value="logout" style="float: right;" action="#{authenticatorManagedBean.logoutAction()}" /></h:form>
+            <h1> Manger Desktop </h1>
+        </p:outputPanel>
+    </p:panel>
+    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
+                 columnClasses="ui-grid-col-3, ui-grid-col-12">
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="menuForm">
+                <p:menu style="height: 500px; width: 98%;">
+                    <p:submenu label="Navigation">
+                        <p:menuitem value="Desktop"          action="/pages/desktop.xhtml"/>
+
+                        <p:menuitem value="Requesting Goods" action="/pages/requestingGoods.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Managing Pending Requests" action="/pages/managingGoodRequests.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePendingRequests()}"/>
+
+                        <p:menuitem value="Managing Users"   action="/pages/managingUsers.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Managing Roles"   action="/pages/managingRoles.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+
+                        <p:menuitem value="Managing Permissions"   action="/pages/managingPermissions.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePermission()}"/>
+
+                        <p:menuitem value="Add Users Wizard"   action="/pages/userRoleWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Add Roles Wizard"   action="/pages/rolePermissionWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </h:panelGrid>
+        <h:panelGrid columns="1" width="100%">
+            <h:panelGrid columns="1" style="margin: 20px">
+                <p:outputLabel value="Hello, #{authenticatorManagedBean.curUser.fullname} "/></h:panelGrid>
+            <p:panel style="margin: 20px"><p:outputLabel value="Role: #{authenticatorManagedBean.selectedRole}"/></p:panel>
+            <p:panel style="margin: 20px"><p:outputLabel value="Visit Qty: #{authenticatorManagedBean.curUser.seenQty}"/></p:panel>
+            <p:panel style="margin: 20px"><p:outputLabel value="Last Seen: #{authenticatorManagedBean.lastSeen}"/></p:panel>
+        </h:panelGrid>
+    </p:panelGrid>
+</h:body>
+</html>

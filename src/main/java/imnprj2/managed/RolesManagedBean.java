@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @RequestScoped
 @ManagedBean(name = "rolesManagedBean")
-public class RolesManagedBean {
+public class RolesManagedBean implements Serializable {
     private int roleId;
     private String roleName;
     private String roleDescription;

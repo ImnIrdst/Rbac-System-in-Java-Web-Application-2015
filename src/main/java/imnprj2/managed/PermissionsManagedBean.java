@@ -8,6 +8,7 @@ import imnprj2.service.RolesService;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
 import javax.faces.model.SelectItem;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @RequestScoped
 @ManagedBean(name = "permissionsManagedBean")
-public class PermissionsManagedBean {
+public class PermissionsManagedBean implements Serializable {
     private int permissionId;
     private String permissionName;
     private String permissionDescription;
