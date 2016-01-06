@@ -39,15 +39,15 @@ public class AuthenticatorManagedBean implements Serializable {
     boolean isLoggedIn = false;
     TreeSet<String> permissions;
 
+    boolean isRefreshNeeded = true;
+
     @ManagedProperty("#{authenticatorService}")
     private AuthenticatorService authenticatorService;
 
 
     @PostConstruct
     public void init() {
-        setMessage("Enter Username and password.");
         usersList = authenticatorService.usersList();
-
         updateSelectRoles();
     }
 
@@ -58,7 +58,7 @@ public class AuthenticatorManagedBean implements Serializable {
 
     //** Actions **//
 
-    public String loginAction(){
+    public String loginAction() throws IOException {
         if (selectedRole == null || selectedRole.equals("")){
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Please Select Role!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -77,9 +77,12 @@ public class AuthenticatorManagedBean implements Serializable {
             if (curUser.getLastSeen().equals(new Timestamp(0))) lastSeen = "N/A";
 
             isLoggedIn = true;
-            permissions = authenticatorService.getPermissionsForUser(email);
+            permissions = authenticatorService.getPermissionsForRole(selectedRole);
 
-            return "/pages/desktop.xhtml";
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.redirect(externalContext.getRequestContextPath() + "/pages/desktop.xhtml");
+
+            return null;
         } else {
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username or Password are Incorrect!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -87,14 +90,15 @@ public class AuthenticatorManagedBean implements Serializable {
         return null;
     }
 
-    public String logoutAction(){
+    public String logoutAction() throws IOException {
         clearParameters();
         isLoggedIn = false;
-        return "/pages/login.xml";
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.redirect(externalContext.getRequestContextPath() + "/pages/login.xhtml");
+        return null;
     }
 
     //** Permissions **//
-
     public void checkAuthentication() throws IOException {
         if (!isLoggedIn){
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -128,13 +132,17 @@ public class AuthenticatorManagedBean implements Serializable {
     public boolean canManagePermission(){
         return permissions.contains("PERMISSION_MANAGMENT");
     }
-    //** Helper Methods **//
 
-    public void updateSelectRoles(){
+    //** Helper Methods **//
+    public void getRolesForUser(){
         if (email == null || authenticatorService.getUserByEmail(email) == null){
-            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username does not exist!", null);
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Email does not exist!", null);
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         }
+        updateSelectRoles();
+    }
+
+    public void updateSelectRoles(){
         if (email == null) {
             selectRoles = new ArrayList<SelectItem>();
             return;
@@ -151,14 +159,10 @@ public class AuthenticatorManagedBean implements Serializable {
     public void clearParameters(){
         email = "";
         password = "";
-        selectedRole = null;
         updateSelectRoles();
     }
 
     //** Getters and Setters **//
-
-    private String message;
-
     public int getUserId() {
         return userId;
     }
@@ -197,14 +201,6 @@ public class AuthenticatorManagedBean implements Serializable {
 
     public void setUsersList(List<UsersEntity> usersList) {
         this.usersList = usersList;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public UsersEntity getCurUser() {

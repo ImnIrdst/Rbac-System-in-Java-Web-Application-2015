@@ -2,15 +2,11 @@ package imnprj2.managed;
 
 import imnprj2.dao.entity.UsersEntity;
 import imnprj2.service.UsersService;
-import ir.cto.ca.cacommon.domain.interfaces.User;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,7 +21,7 @@ public class UsersManagedBean implements Serializable {
     private int userId;
     private String fullname;
     private String username;
-    private String passwordHash;
+    private String password;
     private String email;
     private Timestamp creationDate;
     private List<UsersEntity> usersList;
@@ -59,12 +55,12 @@ public class UsersManagedBean implements Serializable {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -118,7 +114,7 @@ public class UsersManagedBean implements Serializable {
         UsersEntity usersEntity = new UsersEntity();
         usersEntity.setFullname(fullname);
         usersEntity.setUsername(username);
-        usersEntity.setPasswordHash(passwordHash); // TODO: Use Password Hash
+        usersEntity.setPasswordHash(password); // TODO: Use Password Hash
         usersEntity.setEmail(email);
         usersEntity.setSeenQty(0);
         usersEntity.setLastSeen(new Timestamp(0));

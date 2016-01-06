@@ -36,7 +36,7 @@ public class RolePermissionDaoImpl implements RolePermissionDAO {
 
     @Override
     public List<RolePermissionEntity> getRolePermissions() {
-        String statement = "from RolePermissionEntity order by roleId";
+        String statement = "from RolePermissionEntity order by rolesByRoleId.roleName";
         Query query =sessionFactory.getCurrentSession().createQuery(statement);
         return query.list();
     }

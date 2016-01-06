@@ -30,7 +30,7 @@ public class UsersDaoImpl implements UsersDAO {
 
     @Override
     public List<UsersEntity> getUsers() {
-        return sessionFactory.getCurrentSession().createQuery("from UsersEntity").list();
+        return sessionFactory.getCurrentSession().createQuery("from UsersEntity order by username").list();
     }
 
     @Override

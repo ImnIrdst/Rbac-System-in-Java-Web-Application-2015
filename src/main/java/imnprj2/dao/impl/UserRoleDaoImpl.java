@@ -36,7 +36,7 @@ public class UserRoleDaoImpl implements UserRoleDAO {
 
     @Override
     public List<UserRoleEntity> getUserRoles() {
-        String statement = "from UserRoleEntity order by userId";
+        String statement = "from UserRoleEntity order by usersByUserId.username";
         Query query = sessionFactory.getCurrentSession().createQuery(statement);
         return query.list();
     }

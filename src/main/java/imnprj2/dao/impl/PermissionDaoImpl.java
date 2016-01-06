@@ -40,7 +40,7 @@ public class PermissionDaoImpl implements PermissionsDAO {
 
     @Override
     public List<PermissionsEntity> getPermissions() {
-        return sessionFactory.getCurrentSession().createQuery("from PermissionsEntity ").list();
+        return sessionFactory.getCurrentSession().createQuery("from PermissionsEntity order by permissionName").list();
     }
 
     @Override

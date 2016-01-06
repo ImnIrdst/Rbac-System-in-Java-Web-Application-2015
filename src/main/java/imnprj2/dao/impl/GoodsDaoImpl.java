@@ -2,6 +2,7 @@ package imnprj2.dao.impl;
 
 import imnprj2.dao.interfaces.GoodsDAO;
 import imnprj2.dao.entity.GoodsEntity;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,11 +48,14 @@ public class GoodsDaoImpl implements GoodsDAO {
 
     @Override
     public GoodsEntity getGoodById(int goodId) {
-        return null;
+        String statement = "from GoodsEntity where goodId " + goodId;
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        if (query.list().size() == 0) return null;
+        return (GoodsEntity) query.list().get(0);
     }
 
     @Override
     public List<GoodsEntity> getGoods() {
-        return sessionFactory.getCurrentSession().createQuery("from GoodsEntity").list();
+        return sessionFactory.getCurrentSession().createQuery("from GoodsEntity order by goodName").list();
     }
 }

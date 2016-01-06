@@ -49,6 +49,6 @@ public class RolesDaoImpl implements RolesDAO {
 
     @Override
     public List<RolesEntity> getRoles() {
-        return sessionFactory.getCurrentSession().createQuery("from RolesEntity").list();
+        return sessionFactory.getCurrentSession().createQuery("from RolesEntity order by roleName").list();
     }
 }

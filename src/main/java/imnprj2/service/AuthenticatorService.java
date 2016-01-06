@@ -61,18 +61,16 @@ public class AuthenticatorService {
         return userRoleDAO.getRolesForUser(usersEntity.getUserId());
     }
 
-    public TreeSet<String> getPermissionsForUser(String email){
-        List<UserRoleEntity> userRoleEntities = getRolesForUser(email);
-
+    public TreeSet<String> getPermissionsForRole(String roleName){
+        RolesEntity rolesEntity = rolesDAO.getRoleByName(roleName);
         TreeSet<String> permissionNames = new TreeSet<String>();
-        for (UserRoleEntity userRoleEntity : userRoleEntities) {
-            for (RolePermissionEntity rolePermissionEntity
-                    : rolePermissionDAO.getPermissionsForRole(userRoleEntity.getRoleId())) {
-
-                permissionNames.add(rolePermissionEntity.getPermissionsByPermissionId().getPermissionName());
-            }
+        for (RolePermissionEntity rolePermissionEntity
+                : rolePermissionDAO.getPermissionsForRole(rolesEntity.getRoleId())) {
+            permissionNames.add(rolePermissionEntity.getPermissionsByPermissionId().getPermissionName());
         }
         return permissionNames;
     }
+
+
 
 }

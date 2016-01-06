@@ -1,15 +1,11 @@
 package imnprj2.managed;
 
 import imnprj2.dao.entity.UsersEntity;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Timestamp;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by iman on 1/3/16.
@@ -23,7 +19,7 @@ public class UsersManagedBeanTest {
         usersManagedBean = new UsersManagedBean();
         usersManagedBean.setUsername("testUsername");
         usersManagedBean.setFullname("testFullname");
-        usersManagedBean.setPasswordHash("testPassword");
+        usersManagedBean.setPassword("testPassword");
         usersManagedBean.setEmail("testEmail");
     }
 

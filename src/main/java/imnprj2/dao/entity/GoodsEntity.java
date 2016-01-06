@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "goods", schema = "public", catalog = "automation_prj2")
 public class GoodsEntity {
-    private int goodId;
+    private Integer goodId;
     private String goodName;
-    private int goodPrice;
+    private Integer goodPrice;
     private String goodStatus;
     private String goodDescription;
     private Timestamp creationDate;
@@ -21,11 +21,11 @@ public class GoodsEntity {
     @GeneratedValue(generator = "gen")
     @SequenceGenerator(name = "gen",sequenceName = "good_id_seq")
     @Column(name = "good_id", nullable = false, insertable = true, updatable = true)
-    public int getGoodId() {
+    public Integer getGoodId() {
         return goodId;
     }
 
-    public void setGoodId(int goodId) {
+    public void setGoodId(Integer goodId) {
         this.goodId = goodId;
     }
 
@@ -40,12 +40,12 @@ public class GoodsEntity {
     }
 
     @Basic
-    @Column(name = "good_price", nullable = false, insertable = true, updatable = true)
-    public int getGoodPrice() {
+    @Column(name = "good_price", nullable = true, insertable = true, updatable = true)
+    public Integer getGoodPrice() {
         return goodPrice;
     }
 
-    public void setGoodPrice(int goodPrice) {
+    public void setGoodPrice(Integer goodPrice) {
         this.goodPrice = goodPrice;
     }
 

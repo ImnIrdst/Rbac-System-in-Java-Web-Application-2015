@@ -11,25 +11,29 @@
 </h:head>
 <h:body>
     <h:form id="insertForm">
-        <p:panel id="mainPanel" style="margin: auto; width: 30%; " >
-            <p:messages id="loginMessage" closable="true" autoUpdate="true"/>
-            <p:panelGrid id="gridMain" columns="2" style="border: none;" styleClass="ui-noborder">
-                <p:outputLabel value="Username:" for="usernameInput"/>
-                <p:inputText id="usernameInput" value="#{authenticatorManagedBean.email}">
-                    <p:ajax event="blur" listener="#{authenticatorManagedBean.updateSelectRoles}" update="roleInput"  />
-                </p:inputText>
+        <p:panel id="mainPanel" style="margin: auto; width: 35%; " >
+            <p:messages id="loginMessage" closable="true" autoUpdate="true" style="margin: auto;"/>
+            <h:panelGrid columns="1" style="margin: auto;">
+                <p:panelGrid id="gridMain" columns="2" style="border: none;" styleClass="ui-noborder">
+                    <p:outputLabel value="Email:" for="emailInput"/>
+                    <p:inputText id="emailInput" value="#{authenticatorManagedBean.email}" validatorMessage="Enter a valid Email!">
+                        <p:ajax event="blur" listener="#{authenticatorManagedBean.getRolesForUser}" update="roleInput"  />
+                        <f:validateRegex pattern="[A-Za-z._]+@[A-Za-z]+[.][A-Za-z.]+" />
+                    </p:inputText>
 
-                <p:outputLabel value="Password:" for="passwordInput"/>
-                <p:inputText id="passwordInput" value="#{authenticatorManagedBean.password}"/>
+                    <p:outputLabel value="Password:" for="passwordInput"/>
+                    <p:password id="passwordInput" value="#{authenticatorManagedBean.password}"/>
 
-                <p:outputLabel value="Role:" for="roleInput"/>
-                <p:selectOneMenu id="roleInput" value="#{authenticatorManagedBean.selectedRole}">
-                    <f:selectItem itemLabel="Select Role" itemValue=""/>
-                    <f:selectItems value="#{authenticatorManagedBean.selectRoles}"/>
-                </p:selectOneMenu>
-                <p:panel style="border: none;"/>
-                <p:commandButton value="login" action="#{authenticatorManagedBean.loginAction}"/>
-            </p:panelGrid>
+                    <p:outputLabel value="Role:" for="roleInput"/>
+                    <p:selectOneMenu id="roleInput" value="#{authenticatorManagedBean.selectedRole}">
+                        <f:selectItem itemLabel="Select Role" itemValue=""/>
+                        <f:selectItems value="#{authenticatorManagedBean.selectRoles}"/>
+                    </p:selectOneMenu>
+
+                    <p:panel style="border: none;"/>
+                    <p:commandButton value="login" actionListener="#{authenticatorManagedBean.loginAction}"/>
+                </p:panelGrid>
+            </h:panelGrid>
         </p:panel>
     </h:form>
 </h:body>

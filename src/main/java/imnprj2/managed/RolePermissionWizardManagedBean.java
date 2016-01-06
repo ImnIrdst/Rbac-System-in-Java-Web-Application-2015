@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
@@ -48,7 +49,6 @@ public class RolePermissionWizardManagedBean implements Serializable {
             permissionsList.add(permission.getPermissionName());
         }
 
-        clearFields();
         fillTheRolePermissionEntityList();
     }
 
@@ -80,6 +80,7 @@ public class RolePermissionWizardManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Role Created Successfully"));
         fillTheRolePermissionEntityList();
+        clearFields();
         return null;
     }
 

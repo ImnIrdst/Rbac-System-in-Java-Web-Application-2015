@@ -21,7 +21,7 @@ import java.util.List;
 public class GoodsManagedBean implements Serializable {
     private int goodId;
     private String goodName;
-    private int goodPrice;
+    private Integer goodPrice;
     private String goodStatus;
     private String goodDescription;
     private Timestamp creationDate;
@@ -61,11 +61,11 @@ public class GoodsManagedBean implements Serializable {
         this.goodName = goodName;
     }
 
-    public int getGoodPrice() {
+    public Integer getGoodPrice() {
         return goodPrice;
     }
 
-    public void setGoodPrice(int goodPrice) {
+    public void setGoodPrice(Integer goodPrice) {
         this.goodPrice = goodPrice;
     }
 

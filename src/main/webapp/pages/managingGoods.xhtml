@@ -7,15 +7,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
+    <title>Managing Goods</title>
     <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
 </h:head>
 <h:body>
     <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkAuthentication()}" />
-    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkPermission('ACCEPTING_PENDING_REQUESTS')}" />
+
     <p:panel id="headerPanel" style="margin: 10px auto;">
         <p:outputPanel >
-            <h:form><p:commandButton value="logout" style="float: right;" action="#{authenticatorManagedBean.logoutAction()}" /></h:form>
-            <h1> Manger Desktop </h1>
+            <h:form><p:commandButton value="logout" style="float: right;" actionListener="#{authenticatorManagedBean.logoutAction()}" /></h:form>
+            <h1>Managing Goods</h1>
         </p:outputPanel>
     </p:panel>
     <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
@@ -24,28 +25,30 @@
             <h:form id="menuForm">
                 <p:menu style="height: 500px; width: 98%;">
                     <p:submenu label="Navigation">
-                        <p:menuitem value="Desktop"          action="/pages/desktop.xhtml"/>
+                        <p:menuitem value="Desktop"          url="/pages/desktop.xhtml"/>
 
-                        <p:menuitem value="Requesting Goods" action="/pages/requestingGoods.xhtml"
+                        <p:menuitem value="Requesting Goods" url="/pages/requestingGoods.xhtml"
                                     rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
 
-                        <p:menuitem value="Managing Pending Requests" action="/pages/managingGoodRequests.xhtml"
+                        <p:menuitem value="Managing Pending Requests" url="/pages/managingGoodRequests.xhtml"
                                     rendered="#{authenticatorManagedBean.canManagePendingRequests()}"/>
 
-                        <p:menuitem value="Managing Users"   action="/pages/managingUsers.xhtml"
+                        <p:menuitem value="Add Users Wizard"   url="/pages/userRoleWizard.xhtml"
                                     rendered="#{authenticatorManagedBean.canManageUsers()}"/>
 
-                        <p:menuitem value="Managing Roles"   action="/pages/managingRoles.xhtml"
+                        <p:menuitem value="Add Roles Wizard"   url="/pages/rolePermissionWizard.xhtml"
                                     rendered="#{authenticatorManagedBean.canManageRoles()}"/>
 
-                        <p:menuitem value="Managing Permissions"   action="/pages/managingPermissions.xhtml"
+                        <p:menuitem value="Managing Users"   url="/pages/managingUsers.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Managing Roles"   url="/pages/managingRoles.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+
+                        <p:menuitem value="Managing Permissions"   url="/pages/managingPermissions.xhtml"
                                     rendered="#{authenticatorManagedBean.canManagePermission()}"/>
 
-                        <p:menuitem value="Add Users Wizard"   action="/pages/userRoleWizard.xhtml"
-                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
-
-                        <p:menuitem value="Add Roles Wizard"   action="/pages/rolePermissionWizard.xhtml"
-                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+                        <p:menuitem value="Managing Goods"   url="/pages/managingGoods.xhtml"/>
                     </p:submenu>
                 </p:menu>
             </h:form>
@@ -53,45 +56,65 @@
         <h:panelGrid columns="1" width="100%">
             <h:form id="insertForm">
                 <p:panel id="mainPanel">
+                    <p:messages id="nameMessage" closable="true" autoUpdate="true" for="nameInput"/>
+                    <p:messages id="descMessage" closable="true" autoUpdate="true" for="descriptionInput"/>
+                    <p:messages id="priceMessage" closable="true" autoUpdate="true" for="priceInput"/>
+                    <p:messages id="statusMessage" closable="true" autoUpdate="true" for="statusInput"/>
                     <p:panelGrid id="gridMain" columns="2">
                         <p:outputLabel value="Name:" for="nameInput"/>
-                        <p:inputText id="nameInput" value="#{goodsManagedBean.goodName}"/>
+                        <p:inputText id="nameInput" value="#{goodsManagedBean.goodName}"
+                                     required="true" validatorMessage="Only Use numbers and alphabets for Name.">
+                            <f:ajax event="blur"/>
+                            <f:validateRegex pattern="[A-Za-z1-9]+" />
+                        </p:inputText>
 
-                        <p:outputLabel value="Descrition:" for="descriptionInput"/>
-                        <p:inputText id="descriptionInput" value="#{goodsManagedBean.goodDescription}"/>
+                        <p:outputLabel value="Description:" for="descriptionInput"/>
+                        <p:inputText id="descriptionInput" value="#{goodsManagedBean.goodDescription}"
+                                     required="true" validatorMessage="Only Use numbers and alphabets for Description.">
+                            <f:ajax event="blur"/>
+                            <f:validateRegex pattern="[A-Za-z1-9]+" />
+                        </p:inputText>
 
                         <p:outputLabel value="Price:" for="priceInput"/>
-                        <p:inputText id="priceInput" value="#{goodsManagedBean.goodPrice}"/>
+                        <p:inputText id="priceInput" value="#{goodsManagedBean.goodPrice}"
+                                     required="true" validatorMessage="Only Use and Integer number for Price.">
+                            <f:ajax event="blur"/>
+                        </p:inputText>
 
                         <p:outputLabel value="Status:" for="statusInput"/>
-                        <p:inputText id="statusInput" value="#{goodsManagedBean.goodStatus}"/>
+                        <p:inputText id="statusInput" value="#{goodsManagedBean.goodStatus}"
+                                     required="true" validatorMessage="Only Use P, A or R for Status.">
+                            <f:ajax event="blur"/>
+                            <f:validateRegex pattern="P|A|R" />
+                        </p:inputText>
 
-                        <p:commandButton value="insert" action="#{goodsManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
+                        <h:panelGrid columns="1"/>
+                        <p:commandButton value="insert" actionListener="#{goodsManagedBean.insertAction}" update="@([id$=dataGridPanel])"/>
                     </p:panelGrid>
                 </p:panel>
             </h:form>
             <h:form id="dataGridForm">
                 <p:panel id="dataGridPanel">
                     <p:panelGrid id="dataGridPanelGrid">
-                        <p:dataTable var="good" value="#{goodsManagedBean.goodsList}">
-                            <p:column headerText="ID">
+                        <p:dataTable var="good" value="#{goodsManagedBean.goodsList}" tableStyle="width: 100%; text-align: center;">
+                            <p:column headerText="ID" sortBy="#{good.goodId}" style="padding: 10px">
                                 <p:outputLabel value="#{good.goodId}" />
                             </p:column>
 
-                            <p:column headerText="Name">
+                            <p:column headerText="Name" sortBy="#{good.goodName}" style="padding: 10px">
                                 <p:outputLabel value="#{good.goodName}" />
                             </p:column>
 
-                            <p:column headerText="Description">
+                            <p:column headerText="Description" sortBy="#{good.goodDescription}" style="padding: 10px">
                                 <p:outputLabel value="#{good.goodDescription}" />
                             </p:column>
 
-                            <p:column headerText="Price">
+                            <p:column headerText="Price" sortBy="#{good.goodPrice}" style="padding: 10px">
                                 <p:outputLabel value="#{good.goodPrice}" />
                             </p:column>
 
-                            <p:column headerText="Status">
-                                <p:outputLabel value="#{good.goodStatus}" />
+                            <p:column headerText="Status" sortBy="#{good.goodStatus}" style="padding: 10px">
+                                <p:outputLabel value="#{good.goodFullStatus()}" />
                             </p:column>
 
                             <p:column headerText="">
