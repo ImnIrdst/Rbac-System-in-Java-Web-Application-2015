@@ -8,6 +8,7 @@ import imnprj2.dao.interfaces.RolePermissionDAO;
 import imnprj2.dao.interfaces.RolesDAO;
 import imnprj2.dao.interfaces.UserRoleDAO;
 import imnprj2.dao.interfaces.UsersDAO;
+import imnprj2.util.IMNUtils;
 import ir.cto.ca.cacommon.domain.interfaces.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,15 @@ public class AuthenticatorService {
 
     public UsersEntity getUserByUsername(String username){ return usersDAO.getUserByUsername(username); }
 
-    public UsersEntity getUserByEmail(String username){ return usersDAO.getUserByEmail(username); }
+    public UsersEntity getUserByEmail(String username){
+        return usersDAO.getUserByEmail(username);
+    }
+
+    public boolean authenticate(String email, String password){
+        UsersEntity usersEntity = getUserByEmail(email);
+        return usersEntity != null && IMNUtils.stringToSHA1(password).equals(usersEntity.getPasswordHash());
+        //return usersEntity != null && IMNUtils.stringToSHA1(password).equals(usersEntity.getPasswordHash());
+    }
 
     public void updateLastSeen(UsersEntity usersEntity) {
         usersEntity.setLastSeen(new Timestamp(System.currentTimeMillis()));
@@ -72,5 +81,7 @@ public class AuthenticatorService {
     }
 
 
-
+    public void setUsersDAO(UsersDAO usersDAO) {
+        this.usersDAO = usersDAO;
+    }
 }

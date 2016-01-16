@@ -69,10 +69,9 @@ public class AuthenticatorManagedBean implements Serializable {
             tearDown();
         }
 
-        curUser = authenticatorService.getUserByEmail(email);
-        if (curUser != null && password.equals(curUser.getPasswordHash())){
 
-
+        if (authenticatorService.authenticate(email, password)){
+            curUser = authenticatorService.getUserByEmail(email);
             lastSeen = curUser.getLastSeen().toString();
             if (curUser.getLastSeen().equals(new Timestamp(0))) lastSeen = "N/A";
 

@@ -2,6 +2,7 @@ package imnprj2.managed;
 
 import imnprj2.dao.entity.*;
 import imnprj2.service.UserRolesService;
+import imnprj2.util.IMNUtils;
 import org.primefaces.event.FlowEvent;
 
 import javax.annotation.PostConstruct;
@@ -67,7 +68,7 @@ public class UserRoleWizardManagedBean implements Serializable {
             userEntity.setEmail(email);
             userEntity.setUsername(username);
             userEntity.setFullname(fullname);
-            userEntity.setPasswordHash(password); // TODO: use password hash.
+            userEntity.setPasswordHash(IMNUtils.stringToSHA1(password)); // TODO: use password hash.
             userEntity.setSeenQty(1);
             userEntity.setLastSeen(new Timestamp(0));
             userEntity.setCreationDate(new Timestamp(System.currentTimeMillis()));

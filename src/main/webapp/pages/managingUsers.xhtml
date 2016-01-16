@@ -64,7 +64,7 @@
                         <p:inputText id="fullnameInput" value="#{usersManagedBean.fullname}"
                                      required="true" validatorMessage="Only Use numbers and alphabets for Full Name.">
                             <f:ajax event="blur"/>
-                            <f:validateRegex pattern="[A-Za-z1-9]+" />
+                            <f:validateRegex pattern="[A-Za-z1-9 ]+" />
                         </p:inputText>
 
                         <p:outputLabel value="Username:" for="usernameInput"/>

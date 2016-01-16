@@ -12,4 +12,5 @@
             <to-view-id>/index.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>
+
 </faces-config>

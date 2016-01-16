@@ -12,8 +12,6 @@
 </head>
 <body>
   <h1>Hello World!</h1>
-  <a href="pages/managerPages/signup.managerUserManagment.xhtml" > sign up </a> <br/>
   <a href="pages/login.xhtml" > login </a><br/>
-  <a href="pages/globalManagments/managerDesktop.globalDesktop.xhtml" > manager Desktop </a><br/>
 </body>
 </html>

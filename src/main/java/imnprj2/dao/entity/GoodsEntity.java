@@ -1,5 +1,7 @@
 package imnprj2.dao.entity;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -8,6 +10,7 @@ import java.sql.Timestamp;
  *
  */
 @Entity
+@Transactional
 @Table(name = "goods", schema = "public", catalog = "automation_prj2")
 public class GoodsEntity {
     private Integer goodId;

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  *
  */
 @Component
+@Transactional
 @Qualifier("goodsDaoImpl")
 public class GoodsDaoImpl implements GoodsDAO {
     @Autowired
@@ -49,6 +51,14 @@ public class GoodsDaoImpl implements GoodsDAO {
     @Override
     public GoodsEntity getGoodById(int goodId) {
         String statement = "from GoodsEntity where goodId " + goodId;
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        if (query.list().size() == 0) return null;
+        return (GoodsEntity) query.list().get(0);
+    }
+
+    @Override
+    public GoodsEntity getGoodByName(String name) {
+        String statement = "from GoodsEntity where goodName = '" + name + "'";
         Query query = sessionFactory.getCurrentSession().createQuery(statement);
         if (query.list().size() == 0) return null;
         return (GoodsEntity) query.list().get(0);

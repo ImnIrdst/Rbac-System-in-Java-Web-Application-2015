@@ -2,6 +2,7 @@ package imnprj2.managed;
 
 import imnprj2.dao.entity.UsersEntity;
 import imnprj2.service.UsersService;
+import imnprj2.util.IMNUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -114,7 +115,7 @@ public class UsersManagedBean implements Serializable {
         UsersEntity usersEntity = new UsersEntity();
         usersEntity.setFullname(fullname);
         usersEntity.setUsername(username);
-        usersEntity.setPasswordHash(password); // TODO: Use Password Hash
+        usersEntity.setPasswordHash(IMNUtils.stringToSHA1(password)); // TODO: Use Password Hash
         usersEntity.setEmail(email);
         usersEntity.setSeenQty(0);
         usersEntity.setLastSeen(new Timestamp(0));
