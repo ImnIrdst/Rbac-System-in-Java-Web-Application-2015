@@ -13,11 +13,12 @@ public interface GoodsDAO {
     List<GoodsEntity> getGoods();
     GoodsEntity getGoodById(int goodId);
     GoodsEntity getGoodByName(String name);
-    void insert(GoodsEntity goodsEntity);
+    void insertOrUpdate(GoodsEntity goodsEntity);
     void delete(GoodsEntity goodsEntity);
     void update(GoodsEntity goodsEntity);
 
     List<GoodsEntity> getPendingGoods();
+    List<GoodsEntity> getDailyPurchasedGoods();
 
-
+    void insert(GoodsEntity good);
 }

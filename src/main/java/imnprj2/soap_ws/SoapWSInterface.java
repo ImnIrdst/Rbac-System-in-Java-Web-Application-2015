@@ -13,4 +13,7 @@ import javax.jws.soap.SOAPBinding;
 public interface SoapWSInterface {
     @WebMethod
     String isGoodAvail(String email, String password, String goodName);
+
+    @WebMethod
+    String getDailyPurchasedGoods(String email, String password);
 }

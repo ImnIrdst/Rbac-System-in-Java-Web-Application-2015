@@ -1,14 +1,21 @@
 package imnprj2.dao.entity;
 
+import imnprj2.util.TimestampAdapter;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Timestamp;
 
 /**
  * Created by iman on 12/18/15.
  *
  */
+@XmlRootElement(name = "goodsEntity")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Transactional
 @Table(name = "goods", schema = "public", catalog = "automation_prj2")
@@ -18,6 +25,7 @@ public class GoodsEntity {
     private Integer goodPrice;
     private String goodStatus;
     private String goodDescription;
+    @XmlJavaTypeAdapter( TimestampAdapter.class)
     private Timestamp creationDate;
 
     @Id
@@ -115,5 +123,9 @@ public class GoodsEntity {
         result = 31 * result + (goodDescription != null ? goodDescription.hashCode() : 0);
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         return result;
+    }
+
+    public String purchaseTime () {
+        return creationDate.toString().split(" ")[1];
     }
 }

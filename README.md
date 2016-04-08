@@ -1,16 +1,8 @@
 # About
 
+A Simple Rbac System in java web app using hibernate and Spring technologies,
+
 Project #2 of the Web Programming Course in IUT.
 
-Office Automation.
+Office Automation. Also I used some technologies like JSF, quartz, Soap Web Services, ... .
 
-
-URls:
-
-http://localhost:8080/pages/requestingGoods.xhtml
-http://localhost:8080/pages/managingGoodRequests.xhtml
-http://localhost:8080/pages/managingUsers.xhtml
-http://localhost:8080/pages/managingRoles.xhtml
-http://localhost:8080/pages/managingPermissions.xhtml
-http://localhost:8080/pages/userRoleWizard.xhtml
-http://localhost:8080/pages/rolePermissionWizard.xhtml

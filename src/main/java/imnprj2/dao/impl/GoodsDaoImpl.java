@@ -41,8 +41,12 @@ public class GoodsDaoImpl implements GoodsDAO {
     }
 
     @Override
-    public void insert(GoodsEntity goodsEntity) {
-        sessionFactory.getCurrentSession().saveOrUpdate(goodsEntity);
+    public void insertOrUpdate(GoodsEntity goodsEntity) { sessionFactory.getCurrentSession().saveOrUpdate(goodsEntity); }
+
+    @Override
+    public void insert(GoodsEntity good) {
+        if (getGoodByName(good.getGoodName()) == null)
+            sessionFactory.getCurrentSession().save(good);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class GoodsDaoImpl implements GoodsDAO {
 
     @Override
     public GoodsEntity getGoodById(int goodId) {
-        String statement = "from GoodsEntity where goodId " + goodId;
+        String statement = "from GoodsEntity where goodId =" + goodId;
         Query query = sessionFactory.getCurrentSession().createQuery(statement);
         if (query.list().size() == 0) return null;
         return (GoodsEntity) query.list().get(0);
@@ -62,6 +66,13 @@ public class GoodsDaoImpl implements GoodsDAO {
         Query query = sessionFactory.getCurrentSession().createQuery(statement);
         if (query.list().size() == 0) return null;
         return (GoodsEntity) query.list().get(0);
+    }
+
+    @Override
+    public List<GoodsEntity> getDailyPurchasedGoods() {
+        String statement = "from GoodsEntity where creationDate >= current_date and goodStatus = 'A'";
+        Query query = sessionFactory.getCurrentSession().createQuery(statement);
+        return query.list();
     }
 
     @Override

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Daily Purchased Goods</title>
+    <h:outputScript name="jquery/jquery-plugins.js" library="primefaces"/>
+</h:head>
+<h:body>
+    <f:event type="preRenderView" listener="#{authenticatorManagedBean.checkAuthentication()}" />
+
+    <p:panel id="headerPanel" style="margin: 10px auto;">
+        <p:outputPanel >
+            <h:form><p:commandButton value="logout" style="float: right;" actionListener="#{authenticatorManagedBean.logoutAction()}" /></h:form>
+            <h1>Daily purchases</h1>
+        </p:outputPanel>
+    </p:panel>
+    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder"
+                 columnClasses="ui-grid-col-3, ui-grid-col-12">
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="menuForm">
+                <p:menu style="height: 500px; width: 98%;">
+                    <p:submenu label="Navigation">
+                        <p:menuitem value="Desktop"          url="/pages/desktop.xhtml"/>
+
+                        <p:menuitem value="Daily Purchased Goods" url="/pages/dailyPurchasedGoods.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Daily Purchased Goods Chart" url="/pages/dailyChart.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Requesting Goods" url="/pages/requestingGoods.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Managing Pending Requests" url="/pages/managingGoodRequests.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePendingRequests()}"/>
+
+                        <p:menuitem value="Add Users Wizard"   url="/pages/userRoleWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Add Roles Wizard"   url="/pages/rolePermissionWizard.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+
+                        <p:menuitem value="Managing Users"   url="/pages/managingUsers.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageUsers()}"/>
+
+                        <p:menuitem value="Managing Roles"   url="/pages/managingRoles.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManageRoles()}"/>
+
+                        <p:menuitem value="Managing Permissions"   url="/pages/managingPermissions.xhtml"
+                                    rendered="#{authenticatorManagedBean.canManagePermission()}"/>
+
+                        <p:menuitem value="Managing Goods"   url="/pages/managingGoods.xhtml"/>
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </h:panelGrid>
+        <h:panelGrid columns="1" width="100%">
+            <h:form id="dataGridForm">
+                <p:panel id="dataGridPanel">
+                    <p:panelGrid id="dataGridPanelGrid">
+                        <p:dataTable id="dataTable" var="good" value="#{goodsManagedBean.dailyPurchasedGoods}"
+                                     tableStyle="width: 100%; text-align: center;"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                     paginator="true" paginatorPosition="bottom" rows="10" style="margin-bottom:20px">
+
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <p:graphicImage name="icons/pdf.png" width="24" style="float: right;"/>
+                                    <p:outputLabel value="Export to PDF" style="float: right; margin-top: 5px; margin-right: 5px;"/>
+                                    <p:dataExporter target="dataTable" type="pdf" fileName="cars" />
+                                </h:commandLink>
+                            </f:facet>
+
+                            <p:column headerText="ID" sortBy="#{good.goodId}" style="padding: 10px"
+                                      filterBy="#{good.goodId}" filterMatchMode="contains" >
+                                <p:outputLabel value="#{good.goodId}" />
+                            </p:column>
+
+                            <p:column headerText="Name" sortBy="#{good.goodName}" style="padding: 10px"
+                                      filterBy="#{good.goodName}" filterMatchMode="contains" >
+                                <p:outputLabel value="#{good.goodName}" />
+                            </p:column>
+
+                            <p:column headerText="Description" sortBy="#{good.goodDescription}" style="padding: 10px"
+                                      filterBy="#{good.goodDescription}" filterMatchMode="contains" >
+                                <p:outputLabel value="#{good.goodDescription}" />
+                            </p:column>
+
+                            <p:column headerText="Price" sortBy="#{good.goodPrice}" style="padding: 10px"
+                                      filterBy="#{good.goodPrice}" filterMatchMode="contains" >
+                                <p:outputLabel value="#{good.goodPrice}" />
+                            </p:column>
+
+                            <p:column headerText="Time" sortBy="#{good.purchaseTime()}" style="padding: 10px"
+                                      filterBy="#{good.purchaseTime()}" filterMatchMode="contains" >
+                                <p:outputLabel value="#{good.purchaseTime()}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </h:panelGrid>
+    </p:panelGrid>
+</h:body>
+</html>

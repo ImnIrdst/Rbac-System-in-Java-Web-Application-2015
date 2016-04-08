@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by iman on 12/18/15.
+ *
  */
 @Service("goodsService")
 @Transactional
@@ -20,10 +21,17 @@ public class GoodsService {
     public List<GoodsEntity> goodsList(){ return goodsDAO.getGoods(); }
     public GoodsEntity getGoodById(int id){ return goodsDAO.getGoodById(id); }
     public List<GoodsEntity> getPendingGoods(){ return goodsDAO.getPendingGoods(); }
+    public List<GoodsEntity> getDailyPurchasedGoods() { return goodsDAO.getDailyPurchasedGoods(); }
 
-    public void insert(GoodsEntity goodsEntity) {
-        goodsDAO.insert(goodsEntity);
+    public void insertOrUpdate(GoodsEntity goodsEntity) {
+        goodsDAO.insertOrUpdate(goodsEntity);
+    }
+    public void insert(GoodsEntity good) {
+        goodsDAO.insert(good);
     }
     public void update(GoodsEntity goodsEntity) { goodsDAO.update(goodsEntity); }
     public void delete(GoodsEntity goodsEntity) { goodsDAO.delete(goodsEntity); }
+
+
+
 }

@@ -28,6 +28,12 @@
                     <p:submenu label="Navigation">
                         <p:menuitem value="Desktop"          url="/pages/desktop.xhtml"/>
 
+                        <p:menuitem value="Daily Purchased Goods" url="/pages/dailyPurchasedGoods.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
+                        <p:menuitem value="Daily Purchased Goods Chart" url="/pages/dailyChart.xhtml"
+                                    rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
+
                         <p:menuitem value="Requesting Goods" url="/pages/requestingGoods.xhtml"
                                     rendered="#{authenticatorManagedBean.canRequestGoods()}"/>
 
