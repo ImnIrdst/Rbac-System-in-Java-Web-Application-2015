@@ -6,3 +6,8 @@ Project #2 of the Web Programming Course in IUT.
 
 Office Automation. Also I used some technologies like JSF, quartz, Soap Web Services, ... .
 
+
+
+# Environment
+
+This Application Developed in Intellij Idea Ultimate 14.0 .
