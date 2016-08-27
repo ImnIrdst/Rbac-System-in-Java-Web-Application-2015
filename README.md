@@ -6,4 +6,4 @@ Project #2 of the Web Programming Course in IUT, It's a Bussiness Process Manage
 
 # Environment
 
-This Application Developed in Intellij Idea Ultimate 14.0 .
+This Application Developed by Intellij Idea Ultimate 14.0 .
